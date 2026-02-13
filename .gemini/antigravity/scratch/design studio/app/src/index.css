@@ -1,0 +1,171 @@
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Cormorant Garamond", serif;
+  --font-heading: "Outfit", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-mono: "Space Mono", monospace;
+
+  /* Richer Void Palette */
+  --color-void: #050505;
+  /* Darker, deeper black */
+  --color-deep-charcoal: #0a0a0a;
+  --color-surface-dark: #121212;
+
+  /* Refined Glass & Glow */
+  --color-surface-glass: rgba(255, 255, 255, 0.02);
+  /* More subtle */
+  --color-border-glow: rgba(224, 159, 62, 0.15);
+  /* Thinner, sharper, new gold */
+
+  --color-accent-gold: #E09F3E;
+  /* Warm Amber Gold from Logo */
+  --color-accent-champagne: #FFD28E;
+
+  --color-text-primary: #F0F0F0;
+  --color-text-secondary: #A0A0A0;
+  --color-text-muted: #666666;
+
+  --color-hover-glow: rgba(224, 159, 62, 0.1);
+  /* Matches new gold */
+
+  --animate-antigravity: antigravity 8s ease-in-out infinite;
+  /* Slower, more elegant */
+  --animate-spin-slow: spin 15s linear infinite;
+  --animate-spotlight: spotlight 2s ease-out forwards;
+}
+
+@keyframes antigravity {
+
+  0%,
+  100% {
+    transform: translateY(0px) rotateX(0deg);
+  }
+
+  50% {
+    transform: translateY(-10px) rotateX(0.5deg);
+  }
+}
+
+@keyframes spotlight {
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@layer base {
+  body {
+    background-color: var(--color-void);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: none;
+    background-image: radial-gradient(circle at 50% 0%, #1a1a1a 0%, var(--color-void) 70%);
+    /* Subtle top light */
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-display);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    /* Tighter display headings */
+  }
+}
+
+@layer components {
+
+  /* Ultra-Premium Glass Card */
+  .glass-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+    backdrop-filter: blur(40px);
+    /* Heavier blur for realism */
+    -webkit-backdrop-filter: blur(40px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    /* Very subtle white border */
+    box-shadow:
+      0 4px 24px -1px rgba(0, 0, 0, 0.2),
+      0 0 0 1px rgba(0, 0, 0, 0.4),
+      /* Inner shadow hack */
+      inset 0 1px 0 rgba(255, 255, 255, 0.05);
+    /* Top highlight */
+    border-radius: 4px;
+    /* Sharper, more architectural corners */
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .glass-card:hover {
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: var(--color-border-glow);
+    box-shadow:
+      0 20px 40px -5px rgba(0, 0, 0, 0.4),
+      0 0 0 1px var(--color-border-glow),
+      inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  }
+
+  .glow-border {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .glow-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-accent-gold), transparent);
+    opacity: 0;
+    transition: opacity 0.7s ease;
+    transform: translateX(-100%);
+  }
+
+  .glow-border:hover::before {
+    opacity: 1;
+    transform: translateX(100%);
+    transition: transform 1.5s ease;
+  }
+
+  .magnetic-active {
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+}
+
+.grain-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  /* Finer, more subtle noise */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+}
+
+/* Spotlight Effect class (to be applied to a fixed div) */
+.spotlight-overlay {
+  background: radial-gradient(600px circle at var(--mouse-x) var(--mouse-y),
+      rgba(255, 255, 255, 0.03),
+      transparent 40%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  pointer-events: none;
+  z-index: 1;
+}
