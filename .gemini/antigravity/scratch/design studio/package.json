@@ -1,0 +1,7 @@
+{
+  "name": "designer-studio-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "npm run --prefix app install && npm run --prefix app build"
+  }
+}
