@@ -1,7 +1,7 @@
 [build]
-  base = "app"
-  publish = "dist"
-  command = "npm run build"
+  base = ""
+  command = "cd app && npm install && npm run build"
+  publish = "app/dist"
 
 [[redirects]]
   from = "/*"
